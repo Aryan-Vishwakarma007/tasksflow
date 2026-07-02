@@ -14,4 +14,8 @@ public class User_Services {
     public List<User> getalls(){
         return userRepository.findAll();
     }
+
+    public void setnew(User myUser){
+        userRepository.save(myUser);
+    }
 }
