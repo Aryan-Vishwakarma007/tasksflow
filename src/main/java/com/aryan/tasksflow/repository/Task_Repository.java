@@ -1,4 +1,6 @@
 package com.aryan.tasksflow.repository;
 
-public class Task_Repository {
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+public interface Task_Repository extends MongoRepository {
 }
