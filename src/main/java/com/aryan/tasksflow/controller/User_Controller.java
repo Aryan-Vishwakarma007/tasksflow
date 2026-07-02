@@ -3,9 +3,10 @@ package com.aryan.tasksflow.controller;
 import com.aryan.tasksflow.entity.User;
 import com.aryan.tasksflow.services.User_Services;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,7 +17,16 @@ public class User_Controller {
     User_Services userServices;
 
     @GetMapping
-    public List<User> getall(){
-        userServices.getalls();
+    public ResponseEntity<List<User>> getall(){
+        return new  ResponseEntity<>(userServices.getalls(), HttpStatus.OK);
+    }
+
+    @PostMapping
+    public RequestEntity<User> setnew(@RequestBody User myUser){
+        try {
+
+        } catch (Exception e) {
+
+        }
     }
 }
