@@ -24,8 +24,10 @@ public class User_Controller {
     @PostMapping
     public RequestEntity<User> setnew(@RequestBody User myUser){
         try {
-
+                userServices.setnew(myUser);
+                return new RequestEntity<>(myUser, HttpStatus.OK);
         } catch (Exception e) {
+            return new RequestEntity<>(HttpStatus.BAD_REQUEST);
 
         }
     }
