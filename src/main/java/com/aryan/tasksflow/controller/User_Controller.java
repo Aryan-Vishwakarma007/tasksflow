@@ -30,5 +30,17 @@ public class User_Controller {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+    @PutMapping("/{username}")
+    public ResponseEntity<User> Update(@RequestBody User myuser, @PathVariable String username){
+        User user = userServices.findByusername(username);
+        if(user != null){
+            user.setUsername(myuser.getUsername());
+            user.setEmail(myuser.getEmail());
+            user.setPassword(myuser.getPassword());
+            userServices.setnew(user);
+            return new ResponseEntity<>(user,HttpStatus.OK );
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
 
 }
