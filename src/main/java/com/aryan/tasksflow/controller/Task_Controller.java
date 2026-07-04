@@ -21,16 +21,18 @@ public class Task_Controller {
         return new ResponseEntity<>(taskServices.getTasks(), HttpStatus.OK);
     }
 
-    @PostMapping("/{Id}")
+    @PostMapping("/{myId}")
     public ResponseEntity<Task> setTask(@RequestBody Task myTask , @PathVariable String myId){
            try {
                myTask.setUserId(myId);
                taskServices.setTask(myTask);
-               return new ResponseEntity<>(taskServices.setTask(myTask), HttpStatus.OK);
+               return new ResponseEntity<>(myTask, HttpStatus.OK);
 
            } catch (Exception e) {
                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
            }
     }
+
+
 
 }
