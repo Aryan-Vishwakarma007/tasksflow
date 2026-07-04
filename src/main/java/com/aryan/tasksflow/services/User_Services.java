@@ -18,4 +18,8 @@ public class User_Services {
     public void setnew(User myUser){
         userRepository.save(myUser);
     }
+
+    public User findByusername(String username){
+        return userRepository.findByusername(username);
+    }
 }
