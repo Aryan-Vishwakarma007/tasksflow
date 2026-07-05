@@ -1,6 +1,7 @@
 package com.aryan.tasksflow.controller;
 
 import com.aryan.tasksflow.entity.User;
+import com.aryan.tasksflow.services.Task_Services;
 import com.aryan.tasksflow.services.User_Services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,8 @@ import java.util.List;
 public class User_Controller {
     @Autowired
     User_Services userServices;
+    @Autowired
+    Task_Services taskServices;
 
     @GetMapping
     public ResponseEntity<List<User>> getall(){
@@ -41,6 +44,10 @@ public class User_Controller {
             return new ResponseEntity<>(user,HttpStatus.OK );
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    @DeleteMapping("/{myId}")
+    public ResponseEntity<User> Delete_By_Id(@PathVariable String myId){
+
     }
 
 
