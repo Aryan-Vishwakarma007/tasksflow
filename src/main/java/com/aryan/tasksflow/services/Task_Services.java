@@ -18,4 +18,8 @@ public class Task_Services {
     public Task setTask(Task myTask){
         return taskRepository.save(myTask);
     }
+
+    public Void deleteTask(String MyId){
+         taskRepository.deleteById(MyId);
+    }
 }
