@@ -19,7 +19,7 @@ public class Task_Services {
         return taskRepository.save(myTask);
     }
 
-    public Void deleteTask(String MyId){
+    public void deleteTask(String MyId){
          taskRepository.deleteById(MyId);
     }
 }
