@@ -32,7 +32,11 @@ public class Task_Controller {
                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
            }
     }
-
+    @DeleteMapping("/{MyId}")
+    public ResponseEntity<?> deleteTask(@PathVariable String MyId){
+        taskServices.deleteTask(MyId);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
 
 }
