@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/task")
@@ -37,7 +38,22 @@ public class Task_Controller {
         taskServices.deleteTask(MyId);
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
+    @PutMapping("/{myId}")
+    public ResponseEntity<Task> updateTask(@RequestBody Task myTask, @PathVariable String myId){
+        Optional<Task> taskkk = taskServices.findById(myId);
+        if(taskkk.isPresent()){
+            Task task = taskkk.get();  // getting Task form OPTIONAL
+            task.setTitle(myTask.getTitle());
+            task.setDescription(myTask.getDescription());
+            task.setStatus(myTask.getStatus());
+            task.setPriority(myTask.getPriority());
+            task.setDeadline(myTask.getDeadline());
+            task.setUserId((myTask.getUserId()));
+            taskServices.setTask(task);
+            return new ResponseEntity<>(task, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
 
 }
