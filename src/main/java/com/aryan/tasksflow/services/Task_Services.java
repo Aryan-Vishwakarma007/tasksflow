@@ -27,4 +27,8 @@ public class Task_Services {
     public Optional<Task> findById(String MyId){
         return taskRepository.findById(MyId);
     }
+
+    public void deleteByuserId(String myId){
+        taskRepository.deleteByuserId(myId);
+    }
 }
