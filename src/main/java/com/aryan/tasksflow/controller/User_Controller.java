@@ -46,8 +46,9 @@ public class User_Controller {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
     @DeleteMapping("/{myId}")
-    public ResponseEntity<User> Delete_By_Id(@PathVariable String myId){
-
+    public ResponseEntity<?> Delete_By_Id(@PathVariable String myId){
+        userServices.deleteUser(myId);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 
