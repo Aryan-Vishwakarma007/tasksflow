@@ -27,6 +27,7 @@ public class User_Services {
     }
 
     public void deleteUser(String myId){
-
+        taskServices.deleteByuserId(myId);
+        userRepository.deleteByid(myId);
     }
 }
