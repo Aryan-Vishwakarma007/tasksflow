@@ -22,4 +22,8 @@ public class User_Services {
     public User findByusername(String username){
         return userRepository.findByusername(username);
     }
+
+    public void deleteUser(String myId){
+
+    }
 }
