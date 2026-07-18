@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/task")
+@RequestMapping("/tasks")
 public class Task_Controller {
     @Autowired
     private Task_Services taskServices;
