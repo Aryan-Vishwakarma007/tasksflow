@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class User_Controller {
     @Autowired
     User_Services userServices;
@@ -25,15 +25,7 @@ public class User_Controller {
         return new  ResponseEntity<>(userServices.getalls(), HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<User> setnew(@RequestBody User myUser){
-        try {
-            userServices.setnew(myUser);
-            return new ResponseEntity<>(myUser, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
+
     @PutMapping("/{username}")
     public ResponseEntity<User> Update(@RequestBody User myuser, @PathVariable String username){
         User user = userServices.findByusername(username);
