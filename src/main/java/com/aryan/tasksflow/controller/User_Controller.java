@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,9 +23,12 @@ public class User_Controller {
     Task_Services taskServices;
 
     @GetMapping
-    public ResponseEntity<List<User>> getall(){
+    public ResponseEntity<List<User>> get_task_User(){
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String usernames = authentication.getName();
         return new  ResponseEntity<>(userServices.getalls(), HttpStatus.OK);
     }
+
 
 
     @PutMapping("/{username}")

@@ -1,11 +1,14 @@
 package com.aryan.tasksflow.controller;
 
 import com.aryan.tasksflow.entity.Task;
+import com.aryan.tasksflow.entity.User;
+import com.aryan.tasksflow.repository.User_Repository;
 import com.aryan.tasksflow.services.Task_Services;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,10 +20,27 @@ import java.util.Optional;
 public class Task_Controller {
     @Autowired
     private Task_Services taskServices;
+    @Autowired
+    private User_Repository userRepository;
 
-    @GetMapping
-    public ResponseEntity<List<Task>> getTasks(){
-        return new ResponseEntity<>(taskServices.getTasks(), HttpStatus.OK);
+//    @GetMapping
+//    public ResponseEntity<List<Task>> getTasks(){   //yaha se saare tasks acess hore h
+////        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+////        String usernames = authentication.getName()
+//
+//        return new ResponseEntity<>(taskServices.getTasks(), HttpStatus.OK);
+//    }
+    @GetMapping()
+    public ResponseEntity<List<Task>> getTasksOfUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String usernames = authentication.getName();
+
+        User byusername = userRepository.findByusername(usernames);
+
+        if(byusername == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        List<Task>  User_Tasks= taskServices.findByuserId(byusername.getId());
+        return new ResponseEntity<>(User_Tasks, HttpStatus.OK);
+
     }
 
     @PostMapping("/{myId}")
