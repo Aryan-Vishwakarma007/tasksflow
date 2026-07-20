@@ -34,7 +34,7 @@ public class Task_Controller {
     public ResponseEntity<List<Task>> getTasksOfUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String usernames = authentication.getName();
-
+//        String usernames = "Jerry";
         User byusername = userRepository.findByusername(usernames);
 
         if(byusername == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
