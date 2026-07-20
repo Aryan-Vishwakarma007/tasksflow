@@ -20,8 +20,8 @@ public class SpringSecurity {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/tasks/**").authenticated()
-//                        .requestMatchers("/users/**").authenticated()
+                        .requestMatchers("/tasks/**").authenticated()
+                        .requestMatchers("/users/**").authenticated()
                         .anyRequest().permitAll()
                 )
                 .httpBasic(Customizer.withDefaults());
