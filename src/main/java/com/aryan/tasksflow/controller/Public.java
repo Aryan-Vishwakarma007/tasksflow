@@ -16,7 +16,7 @@ public class Public {
     @Autowired
     User_Services userServices;
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<User> setnew(@RequestBody User myUser){
         try {
             userServices.setnew(myUser);

@@ -23,19 +23,8 @@ public class Task_Controller {
     @Autowired
     private User_Repository userRepository;
 
-//    @GetMapping
-//    public ResponseEntity<List<Task>> getTasks(){   //yaha se saare tasks acess hore h
-////        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-////        String usernames = authentication.getName()
-//
-//        return new ResponseEntity<>(taskServices.getTasks(), HttpStatus.OK);
-//    }
     @GetMapping()
     public ResponseEntity<List<Task>> getTasksOfUser(){
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        System.out.println(authentication);
-//        String usernames = authentication.getName();
-//        System.out.println(usernames);
         String usernames = "Jerry";
         User byusername = userRepository.findByusername(usernames);
 

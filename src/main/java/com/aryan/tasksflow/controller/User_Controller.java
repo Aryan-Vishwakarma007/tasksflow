@@ -28,7 +28,15 @@ public class User_Controller {
 //        String usernames = authentication.getName();
         return new  ResponseEntity<>(userServices.getalls(), HttpStatus.OK);
     }
-
+    @PostMapping()
+    public ResponseEntity<User> setnew(@RequestBody User myUser){
+        try {
+            userServices.setnew(myUser);
+            return new ResponseEntity<>(myUser, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
 
     @PutMapping("/{username}")
