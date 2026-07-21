@@ -32,9 +32,11 @@ public class Task_Controller {
 //    }
     @GetMapping()
     public ResponseEntity<List<Task>> getTasksOfUser(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String usernames = authentication.getName();
-//        String usernames = "Jerry";
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        System.out.println(authentication);
+//        String usernames = authentication.getName();
+//        System.out.println(usernames);
+        String usernames = "Jerry";
         User byusername = userRepository.findByusername(usernames);
 
         if(byusername == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
