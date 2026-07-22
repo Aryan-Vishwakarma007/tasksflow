@@ -1,5 +1,6 @@
 package com.aryan.tasksflow.controller;
 
+import com.aryan.tasksflow.entity.Task;
 import com.aryan.tasksflow.entity.User;
 import com.aryan.tasksflow.services.Task_Services;
 import com.aryan.tasksflow.services.User_Services;
@@ -22,20 +23,19 @@ public class User_Controller {
     @Autowired
     Task_Services taskServices;
 
-    @GetMapping
-    public ResponseEntity<List<User>> get_task_User(){
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String usernames = authentication.getName();
-        return new  ResponseEntity<>(userServices.getalls(), HttpStatus.OK);
-    }
-    @PostMapping()
-    public ResponseEntity<User> setnew(@RequestBody User myUser){
-        try {
-            userServices.setnew(myUser);
-            return new ResponseEntity<>(myUser, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    @GetMapping()
+    public ResponseEntity<List<Task>> get_task_User(){
+        System.out.println("done1");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("done2");
+        String usernames = authentication.getName();
+        System.out.println(usernames);
+        User user = userServices.findByusername(usernames);
+        System.out.println("done3");
+        List<Task> tasks = taskServices.findByuserId(user.getId());
+        System.out.println("done4");
+        return new ResponseEntity<>(tasks, HttpStatus.FOUND);
+
     }
 
 

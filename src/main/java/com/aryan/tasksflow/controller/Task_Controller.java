@@ -23,16 +23,6 @@ public class Task_Controller {
     @Autowired
     private User_Repository userRepository;
 
-    @GetMapping()
-    public ResponseEntity<List<Task>> getTasksOfUser(){
-        String usernames = "Jerry";
-        User byusername = userRepository.findByusername(usernames);
-
-        if(byusername == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        List<Task>  User_Tasks= taskServices.findByuserId(byusername.getId());
-        return new ResponseEntity<>(User_Tasks, HttpStatus.OK);
-
-    }
 
     @PostMapping("/{myId}")
     public ResponseEntity<Task> setTask(@RequestBody Task myTask , @PathVariable String myId){

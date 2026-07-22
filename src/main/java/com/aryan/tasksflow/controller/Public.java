@@ -19,8 +19,10 @@ public class Public {
     @PostMapping()
     public ResponseEntity<User> setnew(@RequestBody User myUser){
         try {
-            userServices.setnew(myUser);
+            userServices.setnewUser(myUser);
+            System.out.println("done public ");
             return new ResponseEntity<>(myUser, HttpStatus.OK);
+
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
