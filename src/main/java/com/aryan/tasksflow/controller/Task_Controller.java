@@ -25,18 +25,14 @@ public class Task_Controller {
 
     @GetMapping()
     public  ResponseEntity<List<Task>> setTask() {
-        System.out.println("d1");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println("d2");
         String name = authentication.getName();
-        System.out.println(name);
         User byusername = userRepository.findByusername(name);
         String id = byusername.getId();
         List<Task> byuserId = taskServices.findByuserId(id);
         return new ResponseEntity<>(byuserId, HttpStatus.FOUND);
 
     }
-    //authentication rem
     @PostMapping()
     public ResponseEntity<Task> setTask(@RequestBody Task myTask ){
            try {
