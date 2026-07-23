@@ -23,6 +23,19 @@ public class Task_Controller {
     @Autowired
     private User_Repository userRepository;
 
+    @GetMapping()
+    public  ResponseEntity<List<Task>> setTask() {
+        System.out.println("d1");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("d2");
+        String name = authentication.getName();
+        System.out.println(name);
+        User byusername = userRepository.findByusername(name);
+        String id = byusername.getId();
+        List<Task> byuserId = taskServices.findByuserId(id);
+        return new ResponseEntity<>(byuserId, HttpStatus.FOUND);
+
+    }
 
     @PostMapping("/{myId}")
     public ResponseEntity<Task> setTask(@RequestBody Task myTask , @PathVariable String myId){
