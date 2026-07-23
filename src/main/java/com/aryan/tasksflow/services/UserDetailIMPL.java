@@ -23,6 +23,7 @@ public class UserDetailIMPL implements UserDetailsService {
 
                     .username(byUser.getUsername())
                     .password(byUser.getPassword())
+                    .roles(byUser.getRoles().toArray(new String[0]))
                     .build();
 
             return userDetails;
