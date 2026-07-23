@@ -22,6 +22,7 @@ public class Security {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/user/**").authenticated()
                         .requestMatchers("/tasks/**").authenticated()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().permitAll()
                 )
                 .httpBasic(Customizer.withDefaults());
