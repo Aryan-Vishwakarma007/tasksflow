@@ -48,7 +48,7 @@ public class User_Controller {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    @Transactional
+//    @Transactional
     @DeleteMapping()
     public ResponseEntity<?> Delete_By_Id(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
