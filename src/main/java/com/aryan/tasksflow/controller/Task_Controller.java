@@ -36,11 +36,14 @@ public class Task_Controller {
         return new ResponseEntity<>(byuserId, HttpStatus.FOUND);
 
     }
-
-    @PostMapping("/{myId}")
-    public ResponseEntity<Task> setTask(@RequestBody Task myTask , @PathVariable String myId){
+    //authentication rem
+    @PostMapping()
+    public ResponseEntity<Task> setTask(@RequestBody Task myTask ){
            try {
-               myTask.setUserId(myId);
+               Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+               String username = authentication.getName();
+               User user = userRepository.findByusername(username);
+               myTask.setUserId(user.getId());
                taskServices.setTask(myTask);
                return new ResponseEntity<>(myTask, HttpStatus.OK);
 
