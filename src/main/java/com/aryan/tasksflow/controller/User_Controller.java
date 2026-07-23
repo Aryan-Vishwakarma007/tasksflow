@@ -25,36 +25,39 @@ public class User_Controller {
 
     @GetMapping()
     public ResponseEntity<List<Task>> get_task_User(){
-        System.out.println("done1");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println("done2");
         String usernames = authentication.getName();
-        System.out.println(usernames);
         User user = userServices.findByusername(usernames);
-        System.out.println("done3");
         List<Task> tasks = taskServices.findByuserId(user.getId());
-        System.out.println("done4");
         return new ResponseEntity<>(tasks, HttpStatus.FOUND);
 
     }
 
 
-    @PutMapping("/{username}")
-    public ResponseEntity<User> Update(@RequestBody User myuser, @PathVariable String username){
+    @PutMapping()
+    public ResponseEntity<User> Update(@RequestBody User myuser){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
         User user = userServices.findByusername(username);
         if(user != null){
             user.setUsername(myuser.getUsername());
             user.setEmail(myuser.getEmail());
             user.setPassword(myuser.getPassword());
-            userServices.setnew(user);
+            userServices.setnewUser(user);
             return new ResponseEntity<>(user,HttpStatus.OK );
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
     @Transactional
-    @DeleteMapping("/{myId}")
-    public ResponseEntity<?> Delete_By_Id(@PathVariable String myId){
-        userServices.deleteUser(myId);
+    @DeleteMapping()
+    public ResponseEntity<?> Delete_By_Id(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String usernames = authentication.getName();
+        User user = userServices.findByusername(usernames);
+        String id = user.getId();
+        userServices.deleteUser(id);
+
+        taskServices.deleteByuserId(id);
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
