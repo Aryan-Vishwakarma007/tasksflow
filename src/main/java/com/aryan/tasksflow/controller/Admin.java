@@ -1,5 +1,6 @@
 package com.aryan.tasksflow.controller;
 
+import com.aryan.tasksflow.dto.MakeAdminRequset;
 import com.aryan.tasksflow.entity.User;
 import com.aryan.tasksflow.services.User_Services;
 import org.apache.coyote.Response;
@@ -27,14 +28,15 @@ public class Admin {
     }
 
     @PostMapping("/make-user-admin")
-    public  ResponseEntity<?> makeAdmin(@RequestBody String name){
+    public  ResponseEntity<?> makeAdmin(@RequestBody MakeAdminRequset entity){
+        String name = entity.getUsername();
         User user = userServices.findByusername(name);
         user.setRoles(Arrays.asList("ADMIN"));
         userServices.setnew(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PostMapping("New-admin")
+    @PostMapping("/New-admin")
     public ResponseEntity<?> newAdmin(@RequestBody User user){
         userServices.set_admin(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
