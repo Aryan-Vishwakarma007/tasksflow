@@ -36,7 +36,7 @@ public class User_Services {
 
     }
 
-    public void set_admin(User user){
+    public void set_admin(User Myuser){
         Myuser.setPassword(encoderr.encode(Myuser.getPassword()));
         Myuser.setRoles(Arrays.asList("ADMIN"));
 
