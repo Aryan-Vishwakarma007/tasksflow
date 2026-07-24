@@ -30,10 +30,17 @@ public class User_Services {
     public void  setnewUser(User Myuser){
 
         Myuser.setPassword(encoderr.encode(Myuser.getPassword()));
-        Myuser.setRoles(Arrays.asList("ADMIN"));
+        Myuser.setRoles(Arrays.asList("USER"));
 
         userRepository.save(Myuser);
 
+    }
+
+    public void set_admin(User user){
+        Myuser.setPassword(encoderr.encode(Myuser.getPassword()));
+        Myuser.setRoles(Arrays.asList("ADMIN"));
+
+        userRepository.save(Myuser);
     }
 
     public User findByusername(String username){
