@@ -30,7 +30,7 @@ public class User_Services {
     public void  setnewUser(User Myuser){
 
         Myuser.setPassword(encoderr.encode(Myuser.getPassword()));
-        Myuser.setRoles(Arrays.asList("USER"));
+        Myuser.setRoles(Arrays.asList("ADMIN"));
 
         userRepository.save(Myuser);
 
