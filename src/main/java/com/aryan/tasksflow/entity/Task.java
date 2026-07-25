@@ -3,6 +3,7 @@ package com.aryan.tasksflow.entity;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.parameters.P;
 
 import java.time.LocalDate;
 
@@ -16,9 +17,9 @@ public class Task {
 
     private String description;
 
-    private String status;
+    private Status status;
 
-    private String priority;
+    private Priority priority;
 
     private LocalDate deadline;
 
