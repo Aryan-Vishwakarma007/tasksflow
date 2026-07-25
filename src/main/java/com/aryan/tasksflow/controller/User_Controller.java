@@ -1,5 +1,6 @@
 package com.aryan.tasksflow.controller;
 
+import com.aryan.tasksflow.entity.Priority;
 import com.aryan.tasksflow.entity.Task;
 import com.aryan.tasksflow.entity.User;
 import com.aryan.tasksflow.services.Task_Services;
@@ -60,6 +61,25 @@ public class User_Controller {
         taskServices.deleteByuserId(id);
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+        @GetMapping("/priority/{status}")
+        public ResponseEntity<?> FindbyPriority(@PathVariable  Priority status){
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String usernames = authentication.getName();
+
+            User user = userServices.findByusername(usernames);
+            String id = user.getId();
+
+            List<Task> found = taskServices.findByUserIdAndPriority(id, status);
+            if(found.isEmpty()){
+                return  ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("No tasks found with this priority.");
+            }
+            if(found != null){
+                return new ResponseEntity<>(found, HttpStatus.FOUND);
+            }
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        }
 
 
 }
