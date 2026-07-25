@@ -20,7 +20,6 @@ public class Public {
     public ResponseEntity<User> setnew(@RequestBody User myUser){
         try {
             userServices.setnewUser(myUser);
-            System.out.println("done public ");
             return new ResponseEntity<>(myUser, HttpStatus.OK);
 
         } catch (Exception e) {
