@@ -1,5 +1,6 @@
 package com.aryan.tasksflow.repository;
 
+import com.aryan.tasksflow.entity.Priority;
 import com.aryan.tasksflow.entity.Task;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -11,4 +12,7 @@ public interface Task_Repository extends MongoRepository<Task, String> {
         void deleteByuserId(String userId);
 
     List<Task> findByuserId(String myId);
+
+    List<Task> findByUserIdAndPriority(String userId, Priority priority);
+
 }
