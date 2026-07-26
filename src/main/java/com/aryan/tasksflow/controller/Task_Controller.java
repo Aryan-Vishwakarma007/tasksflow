@@ -1,6 +1,7 @@
 package com.aryan.tasksflow.controller;
 
 import com.aryan.tasksflow.dto.UpdateStatus;
+import com.aryan.tasksflow.entity.Status;
 import com.aryan.tasksflow.entity.Task;
 import com.aryan.tasksflow.entity.User;
 import com.aryan.tasksflow.repository.User_Repository;
@@ -11,9 +12,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.HttpMediaTypeException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -72,7 +75,7 @@ public class Task_Controller {
     }
 
     @PostMapping("{taskId}/status")
-    public ResponseEntity<?> updateStatus(@RequestBody UpdateStatus Mystatus, @PathVariable String taskId){
+    public ResponseEntity<?> updateStatus(@RequestBody Status Mystatus, @PathVariable String taskId){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
@@ -81,8 +84,13 @@ public class Task_Controller {
         if (task.isPresent()){
             Task avail_tasks = task.get();
             String userId = avail_tasks.getUserId();
-
+            if(Objects.equals(user.getId(), userId)){
+                avail_tasks.setStatus(Mystatus);
+                return new ResponseEntity<>(avail_tasks, HttpStatus.OK);
+            }
         }
+         return  ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("No tasks found :(");
 
     }
 
