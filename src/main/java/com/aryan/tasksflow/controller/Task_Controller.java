@@ -1,5 +1,6 @@
 package com.aryan.tasksflow.controller;
 
+import com.aryan.tasksflow.dto.UpdateStatus;
 import com.aryan.tasksflow.entity.Task;
 import com.aryan.tasksflow.entity.User;
 import com.aryan.tasksflow.repository.User_Repository;
@@ -68,6 +69,21 @@ public class Task_Controller {
             return new ResponseEntity<>(task, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("{taskId}/status")
+    public ResponseEntity<?> updateStatus(@RequestBody UpdateStatus Mystatus, @PathVariable String taskId){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        User user = userRepository.findByusername(username);
+        Optional<Task> task = taskServices.findById(taskId);
+        if (task.isPresent()){
+            Task avail_tasks = task.get();
+            String userId = avail_tasks.getUserId();
+
+        }
+
     }
 
 
