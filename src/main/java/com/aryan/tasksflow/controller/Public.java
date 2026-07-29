@@ -17,13 +17,13 @@ public class Public {
     User_Services userServices;
 
     @PostMapping()
-    public ResponseEntity<User> setnew(@RequestBody User myUser){
+    public ResponseEntity<?> setnew(@RequestBody User myUser){
         try {
             userServices.setnewUser(myUser);
             return new ResponseEntity<>(myUser, HttpStatus.OK);
 
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username is already taken!!");
         }
     }
 }
