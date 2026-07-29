@@ -5,6 +5,7 @@ import com.aryan.tasksflow.entity.Task;
 import com.aryan.tasksflow.entity.User;
 import com.aryan.tasksflow.services.Task_Services;
 import com.aryan.tasksflow.services.User_Services;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@Slf4j
 public class User_Controller {
     @Autowired
     User_Services userServices;
@@ -25,12 +27,14 @@ public class User_Controller {
     Task_Services taskServices;
 
     @GetMapping()
-    public ResponseEntity<List<Task>> get_task_User(){
+    public ResponseEntity<?> get_task_User(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String usernames = authentication.getName();
         User user = userServices.findByusername(usernames);
         List<Task> tasks = taskServices.findByuserId(user.getId());
-        return new ResponseEntity<>(tasks, HttpStatus.FOUND);
+        if(!tasks.isEmpty())  return new ResponseEntity<>(tasks, HttpStatus.FOUND);
+        log.warn("No tasks found for {}",usernames);
+         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("NO TASK(S) FOUND");
 
     }
 
