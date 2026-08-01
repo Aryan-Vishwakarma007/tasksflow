@@ -1,6 +1,5 @@
 package com.aryan.tasksflow.controller;
 
-import com.aryan.tasksflow.dto.UpdateStatus;
 import com.aryan.tasksflow.entity.Status;
 import com.aryan.tasksflow.entity.Task;
 import com.aryan.tasksflow.entity.User;
@@ -12,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.HttpMediaTypeException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,7 +42,7 @@ public class Task_Controller {
                String username = authentication.getName();
                User user = userRepository.findByusername(username);
                myTask.setUserId(user.getId());
-               taskServices.setTask(myTask);
+               taskServices.saveTask(myTask);
                return new ResponseEntity<>(myTask, HttpStatus.OK);
 
            } catch (Exception e) {
@@ -68,7 +66,7 @@ public class Task_Controller {
             task.setPriority(myTask.getPriority());
             task.setDeadline(myTask.getDeadline());
             task.setUserId((myTask.getUserId()));
-            taskServices.setTask(task);
+            taskServices.saveTask(task);
             return new ResponseEntity<>(task, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
