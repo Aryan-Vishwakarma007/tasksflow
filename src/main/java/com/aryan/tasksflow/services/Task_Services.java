@@ -1,4 +1,5 @@
 package com.aryan.tasksflow.services;
+import com.aryan.tasksflow.dto.AssignGroupTaskRequest;
 import com.aryan.tasksflow.entity.Priority;
 import com.aryan.tasksflow.entity.Task;
 import com.aryan.tasksflow.repository.Task_Repository;
@@ -20,6 +21,13 @@ public class Task_Services {
     public Task saveTask(Task myTask){
         return taskRepository.save(myTask);
     }
+
+    public Task saveTasks(AssignGroupTaskRequest request){
+        Task task = request.getTask();
+        task.setAssigneeId(request.getAssigneeId());
+        return  taskRepository.save(task);
+    }
+
 
     public void deleteTask(String MyId){
          taskRepository.deleteById(MyId);
