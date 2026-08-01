@@ -53,7 +53,7 @@ public class User_Services {
     }
 
     public User get_by_id(String id){
-        User user = userRepository.findByids(id);
+        User user = userRepository.findById(id);
         return user;
 
     }
