@@ -51,4 +51,10 @@ public class User_Services {
         taskServices.deleteByuserId(myId);
         userRepository.deleteByid(myId);
     }
+
+    public User get_by_id(String id){
+        User user = userRepository.findByids(id);
+        return user;
+
+    }
 }
