@@ -1,5 +1,6 @@
 package com.aryan.tasksflow.controller;
 
+import com.aryan.tasksflow.dto.AssignGroupTaskRequest;
 import com.aryan.tasksflow.dto.MakeAdminRequset;
 import com.aryan.tasksflow.entity.Task;
 import com.aryan.tasksflow.entity.User;
@@ -60,6 +61,12 @@ public class Admin {
     }
 
     @PostMapping("/assign-group-task")
-    public ResponseEntity<?> newgroup()
+    public ResponseEntity<?> newgroup(@RequestBody AssignGroupTaskRequest tasks){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        taskServices.saveTasks(tasks);
+        return new ResponseEntity<>(tasks, HttpStatus.OK);
+    }
 
 }
