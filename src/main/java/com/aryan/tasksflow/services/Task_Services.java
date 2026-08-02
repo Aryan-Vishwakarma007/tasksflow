@@ -22,11 +22,7 @@ public class Task_Services {
         return taskRepository.save(myTask);
     }
 
-    public Task saveTasks(AssignGroupTaskRequest request){
-        Task task = request.getTask();
-        task.setAssigneeId(request.getAssigneeId());
-        return  taskRepository.save(task);
-    }
+
 
 
     public void deleteTask(String MyId){
