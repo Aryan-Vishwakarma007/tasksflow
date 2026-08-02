@@ -16,7 +16,5 @@ public interface Task_Repository extends MongoRepository<Task, String> {
     List<Task> findByuserId(String myId);
 
     List<Task> findByUserIdAndPriority(String userId, Priority priority);
-
-    List<Task> saveTasks(AssignGroupTaskRequest myTask);
 }
 
