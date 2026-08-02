@@ -14,5 +14,13 @@ import java.util.List;
 @Data
 public class AssignGroupTaskRequest {
     private Task task;
+
+    @Id
+    private String id;
+
+    private String title;
+
+    private String description;
+
     private List<String> userId;
 }
