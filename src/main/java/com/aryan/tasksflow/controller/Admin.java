@@ -2,8 +2,10 @@ package com.aryan.tasksflow.controller;
 
 import com.aryan.tasksflow.dto.AssignGroupTaskRequest;
 import com.aryan.tasksflow.dto.MakeAdminRequset;
+import com.aryan.tasksflow.entity.Group;
 import com.aryan.tasksflow.entity.Task;
 import com.aryan.tasksflow.entity.User;
+import com.aryan.tasksflow.services.GroupService;
 import com.aryan.tasksflow.services.Task_Services;
 import com.aryan.tasksflow.services.User_Services;
 import org.apache.coyote.Response;
@@ -24,6 +26,8 @@ public class Admin {
     private User_Services userServices;
     @Autowired
     private Task_Services taskServices;
+    @Autowired
+    private GroupService groupService;
 
     @GetMapping("/all-users")
     public ResponseEntity<?> getAllUsers(){
@@ -61,11 +65,10 @@ public class Admin {
     }
 
     @PostMapping("/assign-group-task")
-    public ResponseEntity<?> newgroup(@RequestBody AssignGroupTaskRequest tasks){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-
-        taskServices.saveTasks(tasks);
+    public ResponseEntity<?> newgroup(@RequestBody Group tasks){
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String username = authentication.getName();
+        groupService.saveGroup(tasks);
         return new ResponseEntity<>(tasks, HttpStatus.OK);
     }
 
