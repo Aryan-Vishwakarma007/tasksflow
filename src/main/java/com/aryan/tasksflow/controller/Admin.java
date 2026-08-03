@@ -78,6 +78,9 @@ public class Admin {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
+        List<Task> byStatus = taskServices.findByStatus();
+        return new ResponseEntity<>(byStatus, HttpStatus.OK);
+
 
     }
 
