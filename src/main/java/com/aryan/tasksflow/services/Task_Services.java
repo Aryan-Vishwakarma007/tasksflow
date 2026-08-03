@@ -22,7 +22,9 @@ public class Task_Services {
         return taskRepository.save(myTask);
     }
 
-
+    public List<Task> findByStatus(){
+        return taskRepository.findByStatus();
+    }
 
 
     public void deleteTask(String MyId){
