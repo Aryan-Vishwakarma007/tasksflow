@@ -1,5 +1,6 @@
 package com.aryan.tasksflow.config;
 
+import com.aryan.tasksflow.filter.JwtFilter;
 import com.aryan.tasksflow.services.UserDetailIMPL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,11 +16,15 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 @Configuration
 @EnableWebSecurity
 public class Security {
     @Autowired
     UserDetailIMPL userDetailIMPL;
+    @Autowired
+    JwtFilter jwtFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -28,11 +33,17 @@ public class Security {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/user/**").authenticated()
                         .requestMatchers("/tasks/**").authenticated()
-//                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().permitAll()
                 )
-                .httpBasic(Customizer.withDefaults());
-
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(
+                                SessionCreationPolicy.STATELESS
+                        )
+                )
+                .addFilterBefore(
+                        jwtFilter,
+                        UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -48,10 +59,10 @@ public class Security {
         return new BCryptPasswordEncoder();
     }
 
-    @Autowired
-    public void configureGlobal(    AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailIMPL).passwordEncoder(passwordEncoder());
-    }
+//    @Autowired
+//    public void configureGlobal(    AuthenticationManagerBuilder auth) throws Exception {
+//        auth.userDetailsService(userDetailIMPL).passwordEncoder(passwordEncoder());
+//    }
 
 
 }
