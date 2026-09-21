@@ -49,12 +49,40 @@ public class Task_Controller {
                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
            }
     }
-    @Transactional
-    @DeleteMapping("/{MyId}")
-    public ResponseEntity<?> deleteTask(@PathVariable String MyId){
-        taskServices.deleteTask(MyId);
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//    @Transactional
+//    @DeleteMapping("/{MyId}")
+//    public ResponseEntity<?> deleteTask(@PathVariable String MyId){
+//        taskServices.deleteTask(MyId);
+//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//    }
+@DeleteMapping("/{myId}")
+public ResponseEntity<?> deleteTask(@PathVariable String myId) {
+
+    Authentication authentication =
+            SecurityContextHolder.getContext().getAuthentication();
+
+    String username = authentication.getName();
+
+    User user = userRepository.findByusername(username);
+
+    Optional<Task> taskkk = taskServices.findById(myId);
+
+    if (taskkk.isEmpty()) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Task not found");
     }
+
+    Task task = taskkk.get();
+
+    if (!Objects.equals(task.getUserId(), user.getId())) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body("You cannot delete another user's task");
+    }
+
+    taskServices.deleteTask(myId);
+
+    return ResponseEntity.noContent().build();
+}
 //    @PutMapping("/{myId}")
 //    public ResponseEntity<Task> updateTask(@RequestBody Task myTask, @PathVariable String myId){
 //        Optional<Task> taskkk = taskServices.findById(myId);
