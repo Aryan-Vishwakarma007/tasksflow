@@ -114,7 +114,41 @@ public class Task_Controller {
 //                .body("No tasks found :(");
 //
 //    }
+@PostMapping("/task-review/{myId}")
+public ResponseEntity<?> sendTask_Review(
+        @PathVariable String myId) {
 
+    Authentication authentication =
+            SecurityContextHolder.getContext().getAuthentication();
+
+    String username = authentication.getName();
+
+    User user = userRepository.findByusername(username);
+
+    if (user == null) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body("User not found");
+    }
+
+    Optional<Task> taskkk = taskServices.findById(myId);
+
+    if (taskkk.isEmpty()) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Task not found");
+    }
+
+    Task task = taskkk.get();
+
+    if (!Objects.equals(task.getUserId(), user.getId())) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body("You cannot submit another user's task");
+    }
+
+    task.setStatus(Status.SUBMITTED_FOR_REVIEW);
+    taskServices.saveTask(task);
+
+    return new ResponseEntity<>(task, HttpStatus.OK);
+}
 
 
 }
