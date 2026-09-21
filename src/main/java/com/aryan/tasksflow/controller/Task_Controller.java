@@ -73,42 +73,48 @@ public class Task_Controller {
     }
     //if ur currently working on a task and wanna change the status to IN_PROGESS
     @PostMapping("{taskId}/status")
-    public ResponseEntity<?> updateStatus(@RequestBody Status Mystatus, @PathVariable String taskId){
+    public ResponseEntity<?> updateStatus(@RequestBody Status Mystatus, @PathVariable String taskId) {
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
         User user = userRepository.findByusername(username);
         Optional<Task> task = taskServices.findById(taskId);
-        if (task.isPresent()){
+
+        if (task.isPresent()) {
             Task avail_tasks = task.get();
             String userId = avail_tasks.getUserId();
-            if(Objects.equals(user.getId(), userId)){
+
+            if (Objects.equals(user.getId(), userId)) {
                 avail_tasks.setStatus(Mystatus);
+                taskServices.saveTask(avail_tasks);
+
                 return new ResponseEntity<>(avail_tasks, HttpStatus.OK);
-            }
-        }
-         return  ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body("No tasks found :(");
-
-    }
-    @PostMapping("/task-review/{myId}")
-    public ResponseEntity<?> sendTask_Review(@RequestBody Status myStatus , @PathVariable String myId){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-
-        Optional<Task> taskkk = taskServices.findById(myId);
-        if(taskkk.isPresent()){
-            Task task = taskkk.get();
-            if(task.getUserId() == myId){
-                task.setStatus(Status.SUBMITTED_FOR_REVIEW);
-                return new ResponseEntity<>(task, HttpStatus.OK);
             }
         }
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body("No tasks found :(");
-
     }
+//    @PostMapping("/task-review/{myId}")
+//    public ResponseEntity<?> sendTask_Review(@RequestBody Status myStatus , @PathVariable String myId){
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String username = authentication.getName();
+//
+//        Optional<Task> taskkk = taskServices.findById(myId);
+//        if(taskkk.isPresent()){
+//            Task task = taskkk.get();
+//            if(task.getUserId() == myId){
+//                task.setStatus(Status.SUBMITTED_FOR_REVIEW);
+//                return new ResponseEntity<>(task, HttpStatus.OK);
+//            }
+//        }
+//
+//        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+//                .body("No tasks found :(");
+//
+//    }
+
 
 
 }
