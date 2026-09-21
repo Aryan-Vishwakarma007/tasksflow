@@ -54,7 +54,10 @@ public class Security {
         return configuration.getAuthenticationManager();
     }
 
-
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 //    @Autowired
 //    public void configureGlobal(    AuthenticationManagerBuilder auth) throws Exception {
